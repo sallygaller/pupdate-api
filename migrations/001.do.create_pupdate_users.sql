@@ -8,8 +8,3 @@ CREATE TABLE pupdate_users (
     state VARCHAR(20) NOT NULL,
     date_created TIMESTAMPTZ NOT NULL DEFAULT now()
 );
-
-ALTER TABLE pups
-    ADD COLUMN
-        owner INTEGER REFERENCES pupdate_users(id)
-        ON DELETE SET NULL;

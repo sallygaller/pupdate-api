@@ -14,6 +14,7 @@ CREATE TABLE pups (
     foodobsessed BOOLEAN,
     ballobsessed BOOLEAN,
     description TEXT, 
+    owner INTEGER REFERENCES pupdate_users(id) ON DELETE CASCADE NOT NULL,
     date_added TIMESTAMPTZ DEFAULT now() NOT NULL
 );
 
