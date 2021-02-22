@@ -179,7 +179,7 @@ describe("Pups Endpoints", function () {
       return db.into("pupdate_users").insert(testUsers);
     });
 
-    it.only("Creates an pup, responding with 201 and the new pup", () => {
+    it("Creates an pup, responding with 201 and the new pup", () => {
       this.retries(3);
       const newPup = {
         name: "Cassie",
@@ -243,6 +243,16 @@ describe("Pups Endpoints", function () {
         breed: "Dachshund",
         age: "Adult",
         size: "S",
+        mix: false,
+        nervous: true,
+        rambunctious: false,
+        gentle: true,
+        wrestling: false,
+        walks: false,
+        parks: true,
+        foodobsessed: false,
+        ballobsessed: true,
+        owner: 1,
       };
 
       it(`responds with 400 and an error message when the ${field} is missing`, () => {
@@ -346,14 +356,21 @@ describe("Pups Endpoints", function () {
       it("responds with 204 and updates the pup", () => {
         const idToUpdate = 2;
         const updatedPup = {
-          species: "Fox",
-          type: "Mammal",
-          date: "2021-01-08T08:00:00.000Z",
-          time: "07:30:00",
+          name: "Buddy",
+          breed: "labrador",
+          mix: true,
+          age: "Adult",
+          size: "L",
+          nervous: false,
+          rambunctious: true,
+          gentle: false,
+          wrestling: true,
+          walks: true,
+          parks: true,
+          foodobsessed: false,
+          ballobsessed: false,
           description:
-            "I saw a mother fox and her cubs. The mother hissed at me.",
-          lat: 51.593,
-          lng: -123.755,
+            "Buddy can be a bit full on for some dogs, but he really just loves to play! He especially loves puppies",
         };
         const expectedPup = {
           ...testPups[idToUpdate - 1],
@@ -392,7 +409,7 @@ describe("Pups Endpoints", function () {
       it(`responds with 204 when updating only a subset of fields`, () => {
         const idToUpdate = 2;
         const updatedPup = {
-          species: "Skunk",
+          breed: "dachshund",
         };
         const expectedPup = {
           ...testPups[idToUpdate - 1],

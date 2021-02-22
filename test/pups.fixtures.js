@@ -17,6 +17,7 @@ function makePupsArray() {
       ballobsessed: false,
       description:
         "Eddie can be a bit shy around other dogs at first, but he is really sweet! He loves going on long walks where there is a lot to sniff",
+      date_added: "2020-12-25T09:28:32.615Z",
       owner: 1,
     },
     {
@@ -36,6 +37,7 @@ function makePupsArray() {
       ballobsessed: false,
       description:
         "Buddy can be a bit full on for some dogs, but he really just loves to play! He especially loves puppies",
+      date_added: "2020-12-25T09:28:32.615Z",
       owner: 2,
     },
     {
@@ -53,6 +55,7 @@ function makePupsArray() {
       parks: true,
       foodobsessed: false,
       ballobsessed: false,
+      date_added: "2020-12-25T09:28:32.615Z",
       description: "Fran loves to play, especially with other big dogs!",
       owner: 2,
     },
@@ -72,6 +75,7 @@ function makePupsArray() {
       foodobsessed: false,
       ballobsessed: true,
       description: "Rover could spend hours chasing his frisbee!",
+      date_added: "2020-12-25T09:28:32.615Z",
       owner: 3,
     },
     {
@@ -91,6 +95,7 @@ function makePupsArray() {
       ballobsessed: false,
       description:
         "Speckles loves going on long, slow walks in the neighborhood",
+      date_added: "2020-12-25T09:28:32.615Z",
       owner: 3,
     },
   ];

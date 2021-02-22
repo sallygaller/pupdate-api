@@ -74,7 +74,6 @@ pupsRouter
       description,
       owner,
     };
-    console.log(newPup);
     for (const [key, value] of Object.entries(newPup))
       if (value == null)
         return res.status(400).json({
