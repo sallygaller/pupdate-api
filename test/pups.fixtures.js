@@ -1,7 +1,7 @@
 function makePupsArray() {
   return [
     {
-      id: 1001,
+      id: 1,
       name: "Eddie",
       breed: "dachshund",
       mix: true,
@@ -20,7 +20,7 @@ function makePupsArray() {
       owner: 1,
     },
     {
-      id: 1002,
+      id: 2,
       name: "Buddy",
       breed: "beagle",
       mix: true,
@@ -39,7 +39,7 @@ function makePupsArray() {
       owner: 2,
     },
     {
-      id: 1003,
+      id: 3,
       name: "Fran",
       breed: "pittbull",
       mix: true,
@@ -57,7 +57,7 @@ function makePupsArray() {
       owner: 2,
     },
     {
-      id: 1004,
+      id: 4,
       name: "Rover",
       breed: "labrador",
       mix: true,
@@ -75,7 +75,7 @@ function makePupsArray() {
       owner: 3,
     },
     {
-      id: 1005,
+      id: 5,
       name: "Speckles",
       breed: "labrador",
       mix: false,

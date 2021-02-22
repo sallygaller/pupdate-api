@@ -67,7 +67,7 @@ describe("Pups Endpoints", function () {
           });
       });
 
-      it.only("GET /api/pups responds with 200 and all the pups", () => {
+      it("GET /api/pups responds with 200 and all the pups", () => {
         return (
           supertest(app)
             .get("/api/pups")
@@ -126,13 +126,21 @@ describe("Pups Endpoints", function () {
       const testUsers = makeUsersArray();
       const maliciousPup = {
         id: 911,
-        species: 'Something bad <script>alert("xss");</script>',
-        type: "Bird",
-        date: "2021-01-08T08:00:00.000Z",
-        time: "07:30:00",
+        name: '<script>alert("xss");</script>',
+        breed: "labrador",
+        mix: true,
+        age: "Adult",
+        size: "M",
+        nervous: true,
+        rambunctious: false,
+        gentle: true,
+        wrestling: false,
+        walks: false,
+        parks: true,
+        foodobsessed: false,
+        ballobsessed: true,
         description: `Bad image <img src="https://url.to.file.which/does-not.exist" onerror="alert(document.cookie);">. But not <strong>all</strong> bad.`,
-        lat: 51.593,
-        lng: -123.755,
+        owner: 3,
       };
 
       beforeEach("insert malicious pup", () => {
@@ -144,15 +152,15 @@ describe("Pups Endpoints", function () {
           });
       });
 
-      it("removes XSS attact content", () => {
+      it("removes XSS attack content", () => {
         return (
           supertest(app)
             .get(`/api/pups/${maliciousPup.id}`)
             //   .set("Authorization", makeAuthHeader(testUsers[0]))
             .expect(200)
             .expect((res) => {
-              expect(res.body.species).to.eql(
-                'Something bad &lt;script&gt;alert("xss");&lt;/script&gt;'
+              expect(res.body.name).to.eql(
+                '&lt;script&gt;alert("xss");&lt;/script&gt;'
               );
               expect(res.body.description).to.eql(
                 `Bad image <img src="https://url.to.file.which/does-not.exist">. But not <strong>all</strong> bad.`
@@ -171,17 +179,24 @@ describe("Pups Endpoints", function () {
       return db.into("pupdate_users").insert(testUsers);
     });
 
-    it("Creates an pup, responding with 201 and the new pup", () => {
+    it.only("Creates an pup, responding with 201 and the new pup", () => {
       this.retries(3);
       const newPup = {
-        species: "Flicker",
-        type: "Bird",
-        date: "2021-01-08T08:00:00.000Z",
-        time: "07:30:00",
-        description: "Two flickers at my feeder this morning",
-        lat: 51.593,
-        lng: -123.755,
-        neighbor: 1,
+        name: "Cassie",
+        breed: "poodle",
+        mix: false,
+        age: "Adult",
+        size: "M",
+        nervous: true,
+        rambunctious: false,
+        gentle: true,
+        wrestling: false,
+        walks: false,
+        parks: true,
+        foodobsessed: false,
+        ballobsessed: true,
+        description: `Cassie loves to play with other poodles.`,
+        owner: 1,
       };
       return (
         supertest(app)
@@ -190,13 +205,20 @@ describe("Pups Endpoints", function () {
           .send(newPup)
           .expect(201)
           .expect((res) => {
-            expect(res.body.species).to.eql(newPup.species);
-            expect(res.body.type).to.eql(newPup.type);
-            expect(res.body.date).to.eql(newPup.date);
-            expect(res.body.time).to.eql(newObservation.time);
-            expect(res.body.description).to.eql(newObservation.description);
-            expect(res.body.lat).to.eql(newObservation.lat);
-            expect(res.body.lng).to.eql(newObservation.lng);
+            expect(res.body.name).to.eql(newPup.name);
+            expect(res.body.breed).to.eql(newPup.breed);
+            expect(res.body.mix).to.eql(newPup.mix);
+            expect(res.body.age).to.eql(newPup.age);
+            expect(res.body.size).to.eql(newPup.size);
+            expect(res.body.nervous).to.eql(newPup.nervous);
+            expect(res.body.rambunctious).to.eql(newPup.rambunctious);
+            expect(res.body.gentle).to.eql(newPup.gentle);
+            expect(res.body.wrestling).to.eql(newPup.wrestling);
+            expect(res.body.walks).to.eql(newPup.walks);
+            expect(res.body.parks).to.eql(newPup.parks);
+            expect(res.body.foodobsessed).to.eql(newPup.foodobsessed);
+            expect(res.body.ballobsessed).to.eql(newPup.ballobsessed);
+            expect(res.body.description).to.eql(newPup.description);
             expect(res.body.owner).to.eql(testUsers[0].id);
             expect(res.body).to.have.property("id");
             expect(res.headers.location).to.eql(`/api/pups/${res.body.id}`);
@@ -213,25 +235,14 @@ describe("Pups Endpoints", function () {
       );
     });
 
-    const requiredFields = [
-      "species",
-      "type",
-      "description",
-      "date",
-      "time",
-      "lat",
-      "lng",
-    ];
+    const requiredFields = ["name", "breed", "age", "size"];
 
     requiredFields.forEach((field) => {
       const newPup = {
-        species: "Flicker",
-        type: "Bird",
-        date: "2021-01-08T08:00:00.000Z",
-        time: "07:30:00",
-        description: "Two flickers at my feeder this morning",
-        lat: 51.593,
-        lng: -123.755,
+        name: "Bob",
+        breed: "Dachshund",
+        age: "Adult",
+        size: "S",
       };
 
       it(`responds with 400 and an error message when the ${field} is missing`, () => {

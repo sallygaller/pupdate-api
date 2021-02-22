@@ -22,6 +22,7 @@ const serializePup = (pup) => ({
   foodobsessed: pup.foodobsessed,
   ballobsessed: pup.ballobsessed,
   description: xss(pup.description),
+  date_added: pup.date_added,
   owner: pup.owner,
 });
 
@@ -53,8 +54,9 @@ pupsRouter
       foodobsessed,
       ballobsessed,
       description,
+      owner,
     } = req.body;
-    const owner = req.user.id;
+    // const owner = req.user.id;
     const newPup = {
       name,
       breed,
@@ -70,7 +72,9 @@ pupsRouter
       foodobsessed,
       ballobsessed,
       description,
+      owner,
     };
+    console.log(newPup);
     for (const [key, value] of Object.entries(newPup))
       if (value == null)
         return res.status(400).json({
