@@ -6,7 +6,9 @@ const helmet = require("helmet");
 const { NODE_ENV } = require("./config");
 const pupsRouter = require("./pups/pups-router");
 const pupdatesRouter = require("./pupdates/pupdates-router");
+const pupdateRsvpRouter = require("./pupdate-rsvp/pupdate-rsvp-router");
 const authRouter = require("./auth/auth-router");
+const usersRouter = require("./users/users-router");
 
 const app = express();
 
@@ -22,6 +24,8 @@ app.use(helmet());
 
 app.use("/api/pups", pupsRouter);
 app.use("/api/pupdates", pupdatesRouter);
+app.use("/api/pupdate-rsvp", pupdateRsvpRouter);
+app.use("/api/users", usersRouter);
 app.use("/api/auth", authRouter);
 
 app.get("/", (req, res) => {

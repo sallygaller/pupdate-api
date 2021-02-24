@@ -6,12 +6,11 @@ const usersRouter = express.Router();
 const jsonBodyParser = express.json();
 
 usersRouter.post("/", jsonBodyParser, (req, res, next) => {
-  const { firstName, lastName, password, email, city, state } = req.body;
+  const { firstname, lastname, email, password, city, state } = req.body;
   for (const field of [
-    "firstName",
-    "lastName",
+    "firstname",
+    "lastname",
     "email",
-    "zipcode",
     "password",
     "city",
     "state",
@@ -32,8 +31,8 @@ usersRouter.post("/", jsonBodyParser, (req, res, next) => {
 
       return UsersService.hashPassword(password).then((hashedPassword) => {
         const newUser = {
-          firstName,
-          lastName,
+          firstname,
+          lastname,
           email,
           password: hashedPassword,
           city,

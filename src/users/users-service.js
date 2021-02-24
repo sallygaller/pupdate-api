@@ -41,7 +41,8 @@ const UsersService = {
       firstname: xss(user.firstname),
       lastname: xss(user.lastname),
       email: xss(user.email),
-      zipcode: user.zipcode,
+      city: xss(user.city),
+      state: xss(user.state),
       date_created: new Date(user.date_created),
     };
   },
