@@ -179,7 +179,7 @@ describe("Pups Endpoints", function () {
       return db.into("pupdate_users").insert(testUsers);
     });
 
-    it("Creates an pup, responding with 201 and the new pup", () => {
+    it("Creates a pup, responding with 201 and the new pup", () => {
       this.retries(3);
       const newPup = {
         name: "Cassie",

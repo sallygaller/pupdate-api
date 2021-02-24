@@ -4,6 +4,6 @@ CREATE TABLE pupdates (
     starttime TIME NOT NULL,
     endtime TIME NOT NULL,
     location TEXT NOT NULL,
-    organizer INTEGER REFERENCES pupdate_users(id),
+    organizer INTEGER REFERENCES pupdate_users(id) ON DELETE CASCADE,
     date_created TIMESTAMPTZ NOT NULL DEFAULT now()
 );

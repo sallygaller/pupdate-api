@@ -4,7 +4,7 @@ CREATE TABLE pupdate_users (
     lastname text NOT NULL,
     email VARCHAR(320) NOT NULL,
     password text NOT NULL,
-    city VARCHAR(20) NOT NULL,
+    city text NOT NULL,
     state VARCHAR(20) NOT NULL,
     date_created TIMESTAMPTZ NOT NULL DEFAULT now()
 );

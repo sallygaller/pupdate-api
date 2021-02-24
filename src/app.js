@@ -5,6 +5,8 @@ const cors = require("cors");
 const helmet = require("helmet");
 const { NODE_ENV } = require("./config");
 const pupsRouter = require("./pups/pups-router");
+const pupdatesRouter = require("./pupdates/pupdates-router");
+const authRouter = require("./auth/auth-router");
 
 const app = express();
 
@@ -19,6 +21,8 @@ app.use(
 app.use(helmet());
 
 app.use("/api/pups", pupsRouter);
+app.use("/api/pupdates", pupdatesRouter);
+app.use("/api/auth", authRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello, world!");
