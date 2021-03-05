@@ -4,6 +4,7 @@ const supertest = require("supertest");
 const app = require("../src/app");
 const jwt = require("jsonwebtoken");
 
+const { makePupdateRsvpsArray } = require("./pupdate-rsvps.fixtures");
 const { makePupdatesArray } = require("./pupdates.fixtures");
 const { makeUsersArray } = require("./users.fixtures");
 
@@ -15,6 +16,7 @@ describe("Pupdates Endpoints", function () {
       subject: user.email,
       algorithm: "HS256",
     });
+    console.log(token);
     return `Bearer ${token}`;
   }
 
@@ -29,30 +31,19 @@ describe("Pupdates Endpoints", function () {
   after("disconnect from db", () => db.destroy());
 
   before("clean the table", () =>
-    db.raw("TRUNCATE pupdates, pupdate_users RESTART IDENTITY CASCADE")
+    db.raw(
+      "TRUNCATE pupdates, pupdate_rsvp, pupdate_users RESTART IDENTITY CASCADE"
+    )
   );
 
   afterEach("cleanup", () =>
-    db.raw("TRUNCATE pupdates, pupdate_users RESTART IDENTITY CASCADE")
+    db.raw(
+      "TRUNCATE pupdates, pupdate_rsvp, pupdate_users RESTART IDENTITY CASCADE"
+    )
   );
 
-  describe("GET /api/pupdates", () => {
-    context("Given no pupdates", () => {
-      const testUsers = makeUsersArray();
-
-      beforeEach("insert users", () => {
-        return db.into("pupdate_users").insert(testUsers);
-      });
-
-      it("responds with 200 and an empty list", () => {
-        return supertest(app)
-          .get("/api/pupdates")
-          .set("Authorization", makeAuthHeader(testUsers[0]))
-          .expect(200, []);
-      });
-    });
-
-    context("Given there are pupdates in the database", () => {
+  describe("GET /api/pupdate-rsvp", () => {
+    context("Given no pupdate-rsvps", () => {
       const testUsers = makeUsersArray();
       const testPupdates = makePupdatesArray();
 
@@ -65,11 +56,36 @@ describe("Pupdates Endpoints", function () {
           });
       });
 
-      it("GET /api/pupdates responds with 200 and all the pupdates", () => {
+      it("responds with 200 and an empty list", () => {
         return supertest(app)
-          .get("/api/pupdates")
+          .get("/api/pupdate-rsvp/1")
           .set("Authorization", makeAuthHeader(testUsers[0]))
-          .expect(200, testPupdates);
+          .expect(200, []);
+      });
+    });
+
+    context("Given there are pupdateRsvps in the database", () => {
+      const testUsers = makeUsersArray();
+      const testPupdates = makePupdatesArray();
+      const testPupdateRsvps = makePupdateRsvpsArray();
+
+      beforeEach("insert pupdates", () => {
+        return db
+          .into("pupdate_users")
+          .insert(testUsers)
+          .then(() => {
+            return db.into("pupdates").insert(testPupdates);
+          })
+          .then(() => {
+            return db.into("pupdate_rsvp").insert(testPupdateRsvps);
+          });
+      });
+
+      it.only("GET /api/pupdate responds with 200 and all the attendees for that pupdate", () => {
+        return supertest(app)
+          .get("/api/pupdate-rsvp/user")
+          .set("Authorization", makeAuthHeader(testUsers[0]))
+          .expect(200, testPupdateRsvps);
       });
     });
   });

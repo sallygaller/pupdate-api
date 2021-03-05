@@ -2,7 +2,7 @@ const path = require("path");
 const express = require("express");
 const xss = require("xss");
 const PupsService = require("./pups-service");
-
+const { requireAuth } = require("../middleware/jwt-auth");
 const pupsRouter = express.Router();
 const jsonParser = express.json();
 
@@ -28,8 +28,7 @@ const serializePup = (pup) => ({
 
 pupsRouter
   .route("/")
-  .all()
-  //   .all(requireAuth)
+  .all(requireAuth)
   .get((req, res, next) => {
     const knexInstance = req.app.get("db");
     PupsService.getAllPups(knexInstance)
@@ -54,9 +53,8 @@ pupsRouter
       foodobsessed,
       ballobsessed,
       description,
-      owner,
     } = req.body;
-    // const owner = req.user.id;
+    const owner = req.user.id;
     const newPup = {
       name,
       breed,
@@ -91,12 +89,23 @@ pupsRouter
 
 pupsRouter
   .route("/user")
-  .all()
-  //   .all(requireAuth)
+  .all(requireAuth)
   .get((req, res, next) => {
     const knexInstance = req.app.get("db");
     const id = req.user.id;
     PupsService.getUserPups(knexInstance, id)
+      .then((pups) => {
+        res.json(pups.map(serializePup));
+      })
+      .catch(next);
+  });
+
+pupsRouter
+  .route("/user/:user_id")
+  .all(requireAuth)
+  .get((req, res, next) => {
+    const knexInstance = req.app.get("db");
+    PupsService.getUserPups(knexInstance, req.params.user_id)
       .then((pups) => {
         res.json(pups.map(serializePup));
       })

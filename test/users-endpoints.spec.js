@@ -2,7 +2,7 @@ const knex = require("knex");
 const app = require("../src/app");
 const { makeUsersArray } = require("./users.fixtures");
 
-describe.only("Users Endpoints", function () {
+describe("Users Endpoints", function () {
   let db;
 
   const testUsers = makeUsersArray();

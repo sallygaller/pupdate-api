@@ -14,18 +14,31 @@ const serializePupdateRsvp = (pupdateRsvp) => ({
 });
 
 pupdateRsvpRouter
-  .route("/")
+  .route("/user")
   .all(requireAuth)
   .get((req, res, next) => {
     const knexInstance = req.app.get("db");
-    PupdateRsvpService.getAllPupdateRsvps(knexInstance)
+    const attendee = req.user.id;
+    PupdateRsvpService.getUserPupdateRsvps(knexInstance, attendee)
+      .then((pupdateRsvps) => {
+        res.json(pupdateRsvps.map(serializePupdateRsvp));
+      })
+      .catch(next);
+  });
+
+pupdateRsvpRouter
+  .route("/:pupdateId")
+  .all(requireAuth)
+  .get((req, res, next) => {
+    const knexInstance = req.app.get("db");
+    PupdateRsvpService.getPupdateRsvps(knexInstance, req.params.pupdateId)
       .then((pupdateRsvps) => {
         res.json(pupdateRsvps.map(serializePupdateRsvp));
       })
       .catch(next);
   })
   .post(jsonParser, (req, res, next) => {
-    const { pupdate } = req.body;
+    const pupdate = req.params.pupdateId;
     const attendee = req.user.id;
     const newPupdateRsvp = {
       pupdate,
@@ -46,47 +59,15 @@ pupdateRsvpRouter
       .catch(next);
   });
 
-pupdateRsvpRouter
-  .route("/user")
-  .all(requireAuth)
-  .get((req, res, next) => {
-    const knexInstance = req.app.get("db");
-    const id = req.user.id;
-    PupdateRsvpService.getUserPupdateRsvps(knexInstance, id)
-      .then((pupdateRsvps) => {
-        res.json(pupdateRsvps.map(serializePupdateRsvp));
-      })
-      .catch(next);
-  });
-
-pupdateRsvpRouter
-  .route("/:pupdateRsvp_id")
-  .all(requireAuth)
-  .all((req, res, next) => {
-    PupdateRsvpService.getById(req.app.get("db"), req.params.pupdateRsvp_id)
-      .then((pupdateRsvpRouter) => {
-        if (!pupdateRsvp) {
-          return res.status(404).json({
-            error: { message: `PupdateRsvp doesn't exist` },
-          });
-        }
-        res.pupdateRsvp = pupdateRsvp;
-        next();
-      })
-      .catch(next);
-  })
-  .get((req, res, next) => {
-    res.json(serializePupdateRsvp(res.pupdateRsvp));
-  })
-  .delete((req, res, next) => {
-    PupdateRsvpService.deletePupdateRsvp(
-      req.app.get("db"),
-      req.params.pupdateRsvp_id
-    )
-      .then((numRowsAffected) => {
-        res.status(204).end();
-      })
-      .catch(next);
-  });
+pupdateRsvpRouter.route("/user/:pupdateRsvpId").delete((req, res, next) => {
+  PupdateRsvpService.deletePupdateRsvp(
+    req.app.get("db"),
+    req.params.pupdateRsvpId
+  )
+    .then((numRowsAffected) => {
+      res.status(204).end();
+    })
+    .catch(next);
+});
 
 module.exports = pupdateRsvpRouter;

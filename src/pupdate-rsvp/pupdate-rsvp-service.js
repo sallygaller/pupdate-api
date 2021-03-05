@@ -1,12 +1,9 @@
 const PupdateRsvpService = {
-  getAllPupdateRsvps(knex) {
-    return knex.select("*").from("pupdate_rsvp");
+  getUserPupdateRsvps(knex, attendee) {
+    return knex.from("pupdate_rsvp").select("*").where("attendee", attendee);
   },
-  getById(knex, id) {
-    return knex.from("pupdate_rsvp").select("*").where("id", id).first();
-  },
-  getUserPupdateRsvps(knex, id) {
-    return knex.from("pupdate_rsvp").select("*").where("attendee", id);
+  getPupdateRsvps(knex, pupdate) {
+    return knex.from("pupdate_rsvp").select("*").where("pupdate", pupdate);
   },
   insertPupdateRsvp(knex, newPupdate) {
     return knex
@@ -18,6 +15,7 @@ const PupdateRsvpService = {
       });
   },
   deletePupdateRsvp(knex, id) {
+    console.log(IDBCursor);
     return knex("pupdate_rsvp").where({ id }).delete();
   },
 };
