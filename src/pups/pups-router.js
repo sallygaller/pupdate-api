@@ -14,12 +14,6 @@ var s3 = new aws.S3({
   /* ... */
 });
 
-aws.config.update({
-  secretAccessKey: "FhMGs4r2HFnWYAw6xG6yqfaYmyDWWjTdkc0XG25/",
-  accessKeyId: "AKIA4J34MDSA5QQHYRFB",
-  region: "us-west-1",
-});
-
 const serializePup = (pup) => ({
   id: pup.id,
   name: xss(pup.name),
