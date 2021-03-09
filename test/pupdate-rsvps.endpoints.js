@@ -16,7 +16,6 @@ describe("Pupdates Endpoints", function () {
       subject: user.email,
       algorithm: "HS256",
     });
-    console.log(token);
     return `Bearer ${token}`;
   }
 

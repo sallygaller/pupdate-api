@@ -6,6 +6,7 @@ function makePupdatesArray() {
       starttime: "09:30:00",
       endtime: "10:30:00",
       location: "Arbor Lodge Park",
+      locale: "North Portland",
       organizer: 1,
     },
     {
@@ -14,6 +15,7 @@ function makePupdatesArray() {
       starttime: "15:30:00",
       endtime: "17:30:00",
       location: "Arbor Lodge Park",
+      locale: "North Portland",
       organizer: 1,
     },
     {
@@ -22,6 +24,7 @@ function makePupdatesArray() {
       starttime: "10:00:00",
       endtime: "12:30:00",
       location: "Cathedral Park",
+      locale: "North Portland",
       organizer: 2,
     },
     {
@@ -30,6 +33,7 @@ function makePupdatesArray() {
       starttime: "11:00:00",
       endtime: "12:30:00",
       location: "Arbor Lodge Park",
+      locale: "North Portland",
       organizer: 3,
     },
     {
@@ -38,6 +42,7 @@ function makePupdatesArray() {
       starttime: "14:00:00",
       endtime: "15:30:00",
       location: "Arbor Lodge Park",
+      locale: "North Portland",
       organizer: 3,
     },
   ];

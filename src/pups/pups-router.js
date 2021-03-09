@@ -6,6 +6,20 @@ const { requireAuth } = require("../middleware/jwt-auth");
 const pupsRouter = express.Router();
 const jsonParser = express.json();
 
+var aws = require("aws-sdk");
+var multer = require("multer");
+var multerS3 = require("multer-s3");
+
+var s3 = new aws.S3({
+  /* ... */
+});
+
+aws.config.update({
+  secretAccessKey: "FhMGs4r2HFnWYAw6xG6yqfaYmyDWWjTdkc0XG25/",
+  accessKeyId: "AKIA4J34MDSA5QQHYRFB",
+  region: "us-west-1",
+});
+
 const serializePup = (pup) => ({
   id: pup.id,
   name: xss(pup.name),
@@ -25,6 +39,27 @@ const serializePup = (pup) => ({
   date_added: pup.date_added,
   owner: pup.owner,
 });
+
+var upload = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: "pupdate",
+    cl: "public-read",
+    metadata: function (req, file, cb) {
+      cb(null, { fieldName: file.fieldname });
+    },
+    key: function (req, file, cb) {
+      cb(null, req.get("key"));
+    },
+  }),
+});
+
+pupsRouter
+  .route("/upload")
+  .all(requireAuth)
+  .post(upload.single("uploads"), function (req, res, next) {
+    res.send('"Successfully uploaded files!"');
+  });
 
 pupsRouter
   .route("/")
