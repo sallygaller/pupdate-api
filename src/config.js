@@ -12,4 +12,7 @@ module.exports = {
   CLIENT_ORIGIN: process.env.CLIENT_ORIGIN,
   JWT_EXPIRY: process.env.JWT_EXPIRY || "7200s",
   JWT_SECRET: process.env.JWT_SECRET || "change-this-secret",
+  S3_ACCESS_KEY: process.env.S3_ACCESS_KEY,
+  S3_KEY_ID: process.env.S3_KEY_ID,
+  S3_REGION: process.env.S3_REGION,
 };

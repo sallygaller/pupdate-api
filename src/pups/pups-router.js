@@ -34,6 +34,12 @@ const serializePup = (pup) => ({
   owner: pup.owner,
 });
 
+aws.config.update({
+  secretAccessKey: process.env.S3_ACCESS_KEY,
+  accessKeyId: process.env.S3_KEY_ID,
+  region: process.env.S3_REGION,
+});
+
 var upload = multer({
   storage: multerS3({
     s3: s3,
