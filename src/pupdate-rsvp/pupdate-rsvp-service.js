@@ -15,7 +15,6 @@ const PupdateRsvpService = {
       });
   },
   deletePupdateRsvp(knex, id) {
-    console.log(IDBCursor);
     return knex("pupdate_rsvp").where({ id }).delete();
   },
 };

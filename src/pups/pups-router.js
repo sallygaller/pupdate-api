@@ -3,12 +3,14 @@ const express = require("express");
 const xss = require("xss");
 const PupsService = require("./pups-service");
 const { requireAuth } = require("../middleware/jwt-auth");
+const { S3_ACCESS_KEY, S3_KEY_ID, S3_REGION } = require("../config");
 const pupsRouter = express.Router();
 const jsonParser = express.json();
 
 var aws = require("aws-sdk");
 var multer = require("multer");
 var multerS3 = require("multer-s3");
+const { error } = require("console");
 
 var s3 = new aws.S3({
   /* ... */
@@ -35,16 +37,16 @@ const serializePup = (pup) => ({
 });
 
 aws.config.update({
-  secretAccessKey: process.env.S3_ACCESS_KEY,
-  accessKeyId: process.env.S3_KEY_ID,
-  region: process.env.S3_REGION,
+  secretAccessKey: S3_ACCESS_KEY,
+  accessKeyId: S3_KEY_ID,
+  region: S3_REGION,
 });
 
 var upload = multer({
   storage: multerS3({
     s3: s3,
     bucket: "pupdate",
-    cl: "public-read",
+    acl: "public-read",
     metadata: function (req, file, cb) {
       cb(null, { fieldName: file.fieldname });
     },
