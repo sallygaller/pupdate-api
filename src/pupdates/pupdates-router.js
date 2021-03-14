@@ -13,6 +13,7 @@ const serializePupdate = (pupdate) => ({
   starttime: pupdate.starttime,
   endtime: pupdate.endtime,
   location: xss(pupdate.location),
+  description: xss(pupdate.description),
   organizer: pupdate.organizer,
 });
 
@@ -28,7 +29,7 @@ pupdatesRouter
       .catch(next);
   })
   .post(jsonParser, (req, res, next) => {
-    const { date, starttime, endtime, location } = req.body;
+    const { date, starttime, endtime, location, description } = req.body;
     const organizer = req.user.id;
     const newPupdate = {
       date,
@@ -36,6 +37,7 @@ pupdatesRouter
       endtime,
       location,
       organizer,
+      description,
     };
     for (const [key, value] of Object.entries(newPupdate))
       if (value == null)
@@ -92,8 +94,8 @@ pupdatesRouter
       .catch(next);
   })
   .patch(jsonParser, (req, res, next) => {
-    const { date, starttime, endtime, location } = req.body;
-    const pupdateToUpdate = { date, starttime, endtime, location };
+    const { date, starttime, endtime, location, description } = req.body;
+    const pupdateToUpdate = { date, starttime, endtime, location, description };
 
     const numberOfValues = Object.values(pupdateToUpdate).filter(Boolean)
       .length;

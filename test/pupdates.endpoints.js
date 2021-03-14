@@ -122,7 +122,7 @@ describe("Pupdates Endpoints", function () {
         starttime: "10:30:00",
         endtime: "11:30:00",
         location: '<script>alert("xss");</script>',
-        locale: "North Portland",
+        description: "Let's go to the park.",
         organizer: 3,
       };
 
@@ -164,7 +164,7 @@ describe("Pupdates Endpoints", function () {
         starttime: "17:30:00",
         endtime: "18:30:00",
         location: "Arbor Lodge Park",
-        locale: "North Portland",
+        description: "Let's go to the park.",
         organizer: 1,
       };
       return supertest(app)
@@ -196,7 +196,7 @@ describe("Pupdates Endpoints", function () {
         starttime: "12:30:00",
         endtime: "13:30:00",
         location: "Arbor Lodge Park",
-        locale: "North Portland",
+        description: "Let's go to the park.",
         organizer: 1,
       };
 
@@ -300,7 +300,7 @@ describe("Pupdates Endpoints", function () {
           starttime: "15:30:00",
           endtime: "17:30:00",
           location: "Portsmouth Park",
-          locale: "North Portland",
+          description: "Let's go to the park.",
           organizer: 1,
         };
         const expectedPupdate = {

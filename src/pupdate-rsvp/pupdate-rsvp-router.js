@@ -64,6 +64,13 @@ pupdateRsvpRouter.route("/user/:pupdateRsvpId").delete((req, res, next) => {
     req.app.get("db"),
     req.params.pupdateRsvpId
   )
+    .then((pupdateRsvp) => {
+      if (!pupdateRsvp) {
+        return res.status(404).json({
+          error: { message: `Pupdate RSVP doesn't exist` },
+        });
+      }
+    })
     .then((numRowsAffected) => {
       res.status(204).end();
     })
