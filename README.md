@@ -1,6 +1,6 @@
 # pupdate API
 
-View pupdate [here](https://pupdate-app.vercel.app/).
+View pupdate [here](https://pupdate.vercel.app/).
 
 View the client repo [here](https://github.com/sallygaller/pupdate).
 
