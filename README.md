@@ -52,7 +52,7 @@ This REST API allows users to:
 | `GET /api/pups/user/:user_id` | Bearer: token.      |        | Returns all of the specified user's pups. |
 | `POST /api/pups` | Bearer: token.      | Name, breed, size, age, description, playstyle. | Returns the newly created pup. |
 | `POST /api/pups/upload` | Bearer: token.      | Photo. | Returns the newly created pup. |
-| `GET /api/pups/:id` | Bearer: token.      |Returns pup details of the submitted id. |
+| `GET /api/pups/:id` | Bearer: token.      |        | Returns pup details of the submitted id. |
 | `PATCH /api/pups/:id` | Bearer: token.      | At least one of the following: Name, breed, size, age, description, playstyle. | Returns the updated pup. |
 | `DELETE /api/pups/:id` | Bearer: token.      |         | Deletes pup with the submitted id. | 
 
